@@ -5,13 +5,13 @@ import java.util.HashMap;
 public class LRU {
 
 	
-	private class Node{
-		int key; //will correspond to the actual data coming from the node
-		int value; // will be the index of element coming from the stream
+	private class Node<K, V>{
+		K key; //will correspond to the actual data coming from the node
+		V value; // will be the index of element coming from the stream
 		Node prev;
 		Node next;
 		
-		public Node(int key, int value){
+		public Node(K key, V value){
 			this.key = key;
 			this.value = value;
 			prev = null;
@@ -19,7 +19,8 @@ public class LRU {
 		}
 	}
 
-	HashMap<Integer, Node> hm = new HashMap<>();
+	HashMap<Object, Node> hm = new HashMap<>();//Is this allowed? Ask DJ.
+	
 	int cacheSize = 3;
 	Node head = null;
 	Node tail = null;
@@ -33,7 +34,7 @@ public class LRU {
 		
 	}
 	
-	public void insert(int key, int value){
+	public <K, V> void insert(K key, V value){
 		Node current = new Node(key, value);
 		
 		if(hm.containsKey(key)){ //cache hit case
@@ -84,12 +85,13 @@ public class LRU {
 		//int[] stream = new int[]{4, 7, 0, 7, 1, 0, 1, 2, 1, 2, 7, 1};
 		//int[] stream = new int[]{1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4};
 		//int[] stream = new int[]{7, 0, 1, 2, 0, 3, 0, 4, 2, 3, 0, 3, 2, 1, 2, 0, 1, 7, 0, 1};
-		int[] stream = new int[]{2, 3, 2, 1, 5, 2, 4, 5, 3, 2, 5, 2};
+		Object[] stream = new Object[]{2, 3, 2, 1, 5, "Hello", 2, 4, 5, 3, "World", 2, 2, "Hello", "World"};
 		LRU lru = new LRU(3);
 		
 		for(int i = 0; i < stream.length; i++){
 			lru.insert(stream[i], i);
 		}
+		
 		
 	}
 

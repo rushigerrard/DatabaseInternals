@@ -5,13 +5,13 @@ import java.util.HashMap;
 
 public class CLOCK {
 
-	private class Node{
-		int key; //will correspond to the actual data coming from the node
-		int value; // will be the index of element coming from the stream
+	private class Node<K, V>{
+		K key; //will correspond to the actual data coming from the node
+		V value; // will be the index of element coming from the stream
 		boolean flag;
 		Node next;
 		
-		public Node(int key, int value){
+		public Node(K key, V value){
 			this.key = key;
 			this.value = value;
 			this.flag = true;
@@ -23,7 +23,7 @@ public class CLOCK {
 		}
 	}
 	
-	HashMap<Integer, Node> hm = new HashMap<>();
+	HashMap<Object, Node> hm = new HashMap<>();
 	int cacheSize = 3;
 	Node pointer = null;
 	Node head;
@@ -50,7 +50,7 @@ public class CLOCK {
 		pointer = pointer.next;
 	}
 
-	private void insert(int key, int value) {
+	private <K, V>void insert(K key, V value) {
 		//System.out.println(pointer.key + "," + pointer.flag);
 		Node current = new Node(key, value);
 		
@@ -96,7 +96,7 @@ public class CLOCK {
 	public static void main(String[] args) {
 		//int[] stream = new int[]{4, 7, 0, 7, 1, 0, 1, 2, 1, 2, 7, 1};
 		//int[] stream = new int[]{1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4};
-		int[] stream = new int[]{2, 3, 2, 1, 5, 2, 4, 5, 3, 2, 5, 2};
+		Object[] stream = new Object[]{2, 3, 2, 1, "Hello", "World", "Hello", 5, 2, 4, 5, 3, 2, 5, 2};
 		CLOCK clock = new CLOCK(3);
 				
 		for(int i = 0; i < stream.length; i++){
